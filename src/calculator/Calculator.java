@@ -38,13 +38,12 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
     Button equalsButton;
 
     String input = "";
-    int sum = 0;
-    int temp1 = 0;
-    int temp2 = 0;
-    char lastOperator = ' ';
+    String sum = "";
+    int num1 = 0;
+    int num2 = 0;
+    char operator = ' ';
 
     public static void main(String[] args) {
-
         launch(args);
     }
 
@@ -85,6 +84,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         plusButton.setOnAction(this);
         acButton.setOnAction(this);
         divideButton.setOnAction(this);
+        equalsButton.setOnAction(this);
 
         GridPane layout = new GridPane();
 
@@ -100,6 +100,10 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         layout.add(numberSixButton, 2, 2);
         layout.add(numberThreeButton, 2, 3);
         layout.add(equalsButton, 2, 4);
+        layout.add(plusButton, 3, 1);
+        layout.add(minusButton, 3, 2);
+        layout.add(multiplyButton, 3, 3);
+        layout.add(divideButton, 3, 4);
 
         layout.add(label, 0, 0);
         layout.setVgap(10);
@@ -113,49 +117,131 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
 
     @Override
     public void handle(ActionEvent event) {
-        do {
-                if (event.getSource() == numberOneButton) {
-                    input += "1";
-                }
-                if (event.getSource() == numberTwoButton) {
-                    input += "2";
-                }
-                if (event.getSource() == numberThreeButton) {
-                    input += "3";
-                }
-                if (event.getSource() == numberFourButton) {
-                    input += "4";
-                }
-                if (event.getSource() == numberFiveButton) {
-                    input += "5";
-                }
-                if (event.getSource() == numberSixButton) {
-                    input += "6";
-                }
-                if (event.getSource() == numberSevenButton) {
-                    input += "7";
-                }
-                if (event.getSource() == numberEightButton) {
-                    input += "8";
-                }
-                if (event.getSource() == numberNineButton) {
-                    input += "9";
-                }
-                if (event.getSource() == numberZeroButton) {
-                    input += "0";
-                }
-                if(event.getSource() == plusButton) {
-                    input+= "+";
-                    lastOperator = '+';
-                }
-                if(event.getSource() == equalsButton) {
-                    lastOperator = '=';
-                    //print sum
-                }
-            
-        } while (lastOperator != ' ');
-        
-        
+        if (event.getSource() == numberOneButton) {
+            input += "1";
+            label.setText(input);
+        } else if (event.getSource() == numberTwoButton) {
+            input += "2";
+            label.setText(input);
+        } else if (event.getSource() == numberThreeButton) {
+            input += "3";
+            label.setText(input);
+        } else if (event.getSource() == numberFourButton) {
+            input += "4";
+            label.setText(input);
+        } else if (event.getSource() == numberFiveButton) {
+            input += "5";
+            label.setText(input);
+        } else if (event.getSource() == numberSixButton) {
+            input += "6";
+            label.setText(input);
+        } else if (event.getSource() == numberSevenButton) {
+            input += "7";
+            label.setText(input);
+        } else if (event.getSource() == numberEightButton) {
+            input += "8";
+            label.setText(input);
+        } else if (event.getSource() == numberNineButton) {
+            input += "9";
+            label.setText(input);
+        } else if (event.getSource() == numberZeroButton) {
+            input += "0";
+            label.setText(input);
+        } else if (event.getSource() == equalsButton) {
+            parseInput();
+            calculate();
+            label.setText(sum);
+
+        } else if (event.getSource() == plusButton) {
+            input += "+";
+            operator = '+';
+            label.setText(input);
+        } else if (event.getSource() == minusButton) {
+            input += "-";
+            operator = '-';
+            label.setText(input);
+        } else if (event.getSource() == multiplyButton) {
+            input += "x";
+            operator = 'x';
+            label.setText(input);
+        } else if (event.getSource() == divideButton) {
+            input += "/";
+            operator = '/';
+            label.setText(input);
+        } else if (event.getSource() == acButton) {
+            clearNums();
+        }
+    }
+
+//    public void addNumButtonsPushedToInput(Button nums) {
+//        nums.
+//    } {
+//    
+//    }
+    public void calculate() throws ArithmeticException {
+        try {
+            if (operator == 47) {//if operator is a forward slash
+                sum = Integer.toString(num1 / num2);
+            } else if (operator == 61) { // -
+                sum = Integer.toString(num1 - num2);
+            } else if (operator == 43) { //+
+                sum = Integer.toString(num1 + num2);
+            } else if (operator == 120) {
+                sum = Integer.toString(num1 * num2);
+            }
+        } 
+        catch  (ArithmeticException e) {e.getMessage();}
+    }
+    
+    public void parseInput() {
+        int indexOfOperator = input.indexOf(operator);
+        int inputLength = input.length();
+        num1 = Integer.parseInt(input.substring(0, indexOfOperator));
+        num2 = Integer.parseInt(input.substring(indexOfOperator + 1, inputLength));
 
     }
+
+    public void clearNums() {
+        num1 = 0;
+        num2 = 0;
+        input = "";
+        sum = "";
+        operator = ' ';
+        label.setText("");
+    }
+
+//    public String getInput(ActionEvent event) {
+//        if (event.getSource() == numberOneButton) {
+//            System.out.println("Hello");
+//            return "1";
+//        } else if (event.getSource() == numberTwoButton) {
+//            return "2";
+//        } else if (event.getSource() == numberThreeButton) {
+//            return "3";
+//        } else if (event.getSource() == numberFourButton) {
+//            return "4";
+//        } else if (event.getSource() == numberFiveButton) {
+//            return "5";
+//        } else if (event.getSource() == numberSixButton) {
+//            return "6";
+//        } else if (event.getSource() == numberSevenButton) {
+//            return "7";
+//        } else if (event.getSource() == numberEightButton) {
+//            return "8";
+//        } else if (event.getSource() == numberNineButton) {
+//            return "9";
+//        } else if (event.getSource() == numberZeroButton) {
+//            return "0";
+//        } else if (event.getSource() == equalsButton) {
+//            lastOperator = '=';
+//            return "=";
+//        }
+//        else if(event.getSource() == plusButton) {
+//            lastOperator = '+';
+//            return "+";
+//        }
+//
+//        return "";
+//
+//    }
 }
