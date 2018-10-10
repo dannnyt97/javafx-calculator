@@ -6,14 +6,20 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 
 /**
  *
  * @author dantown
  */
-public class Calculator extends Application implements EventHandler<ActionEvent>{
+public class Calculator extends Application implements EventHandler<ActionEvent> {
+
+    Label label;
     Button numberOneButton;
     Button numberTwoButton;
     Button numberThreeButton;
@@ -24,44 +30,44 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
     Button numberEightButton;
     Button numberNineButton;
     Button numberZeroButton;
-    
+    Button plusButton;
+    Button minusButton;
+    Button divideButton;
+    Button multiplyButton;
+    Button acButton;
+    Button equalsButton;
+
+    String input = "";
+    int sum = 0;
+    int temp1 = 0;
+    int temp2 = 0;
+    char lastOperator = ' ';
+
     public static void main(String[] args) {
+
         launch(args);
     }
-    
-     @Override
+
+    @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Title of Window");
-        numberOneButton = new Button();
-        numberOneButton.setText("1");
-        
-        numberTwoButton = new Button();
-        numberTwoButton.setText("2");
-        
-        numberThreeButton = new Button();
-        numberThreeButton.setText("3");
-        
-        numberFourButton = new Button();
-        numberFourButton.setText("4");
-        
-        numberFiveButton = new Button();
-        numberFiveButton.setText("5");
-        
-        numberSixButton = new Button();
-        numberSixButton.setText("6");
-        
-        numberSevenButton = new Button();
-        numberSevenButton.setText("7");
-        
-        numberEightButton = new Button();
-        numberEightButton.setText("8");
-        
-        numberNineButton = new Button();
-        numberNineButton.setText("9");
-        
-        numberZeroButton = new Button();
-        numberZeroButton.setText("0");
-        
+        primaryStage.setTitle("Calculator");
+        numberOneButton = new Button("1");
+        numberTwoButton = new Button("2");
+        numberThreeButton = new Button("3");
+        numberFourButton = new Button("4");
+        numberFiveButton = new Button("5");
+        numberSixButton = new Button("6");
+        numberSevenButton = new Button("7");
+        numberEightButton = new Button("8");
+        numberNineButton = new Button("9");
+        numberZeroButton = new Button("0");
+        divideButton = new Button("/");
+        acButton = new Button("ac");
+        equalsButton = new Button("=");
+        plusButton = new Button("+");
+        minusButton = new Button("-");
+        multiplyButton = new Button("x");
+        label = new Label();
 
         //This class will handle the button events
         numberOneButton.setOnAction(this);
@@ -74,47 +80,82 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         numberEightButton.setOnAction(this);
         numberNineButton.setOnAction(this);
         numberZeroButton.setOnAction(this);
+        minusButton.setOnAction(this);
+        multiplyButton.setOnAction(this);
+        plusButton.setOnAction(this);
+        acButton.setOnAction(this);
+        divideButton.setOnAction(this);
 
-        StackPane layout = new StackPane();
-        layout.getChildren().add(numberOneButton);
-        layout.getChildren().add(numberTwoButton);
-        layout.getChildren().add(numberThreeButton);
-        layout.getChildren().add(numberFourButton);
-        layout.getChildren().add(numberFiveButton);       
-        layout.getChildren().add(numberSixButton); 
-        layout.getChildren().add(numberSevenButton);
-        layout.getChildren().add(numberEightButton);
-        layout.getChildren().add(numberNineButton);        
-        layout.getChildren().add(numberZeroButton);
-                
+        GridPane layout = new GridPane();
+
+        layout.add(numberSevenButton, 0, 1);
+        layout.add(numberFourButton, 0, 2);
+        layout.add(numberOneButton, 0, 3);
+        layout.add(acButton, 0, 4);
+        layout.add(numberEightButton, 1, 1);
+        layout.add(numberFiveButton, 1, 2);
+        layout.add(numberTwoButton, 1, 3);
+        layout.add(numberZeroButton, 1, 4);
+        layout.add(numberNineButton, 2, 1);
+        layout.add(numberSixButton, 2, 2);
+        layout.add(numberThreeButton, 2, 3);
+        layout.add(equalsButton, 2, 4);
+
+        layout.add(label, 0, 0);
+        layout.setVgap(10);
+        layout.setHgap(10);
+
         Scene scene = new Scene(layout, 300, 250);
+
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    
+
     @Override
     public void handle(ActionEvent event) {
-        if (event.getSource() == numberOneButton) 
-            System.out.println("Hey Charlie!");
-        if (event.getSource() == numberTwoButton) 
-            System.out.println("Hey Charlie!");
-        if (event.getSource() == numberThreeButton) 
-            System.out.println("Hey Charlie!");
-        if (event.getSource() == numberFourButton) 
-            System.out.println("Hey Charlie!");
-        if (event.getSource() == numberFiveButton) 
-            System.out.println("Hey Charlie!");
-        if (event.getSource() == numberSixButton) 
-            System.out.println("Hey Charlie!");
-        if (event.getSource() == numberSevenButton) 
-            System.out.println("Hey Charlie!");
-        if (event.getSource() == numberEightButton) 
-            System.out.println("Hey Charlie!");
-        if (event.getSource() == numberNineButton) 
-            System.out.println("Hey Charlie!");
-        if (event.getSource() == numberZeroButton) 
-            System.out.println("Hey Charlie!");
+        do {
+                if (event.getSource() == numberOneButton) {
+                    input += "1";
+                }
+                if (event.getSource() == numberTwoButton) {
+                    input += "2";
+                }
+                if (event.getSource() == numberThreeButton) {
+                    input += "3";
+                }
+                if (event.getSource() == numberFourButton) {
+                    input += "4";
+                }
+                if (event.getSource() == numberFiveButton) {
+                    input += "5";
+                }
+                if (event.getSource() == numberSixButton) {
+                    input += "6";
+                }
+                if (event.getSource() == numberSevenButton) {
+                    input += "7";
+                }
+                if (event.getSource() == numberEightButton) {
+                    input += "8";
+                }
+                if (event.getSource() == numberNineButton) {
+                    input += "9";
+                }
+                if (event.getSource() == numberZeroButton) {
+                    input += "0";
+                }
+                if(event.getSource() == plusButton) {
+                    input+= "+";
+                    lastOperator = '+';
+                }
+                if(event.getSource() == equalsButton) {
+                    lastOperator = '=';
+                    //print sum
+                }
+            
+        } while (lastOperator != ' ');
         
+        
+
     }
-    
 }
