@@ -4,9 +4,11 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -19,7 +21,7 @@ import javafx.scene.layout.GridPane;
  */
 public class Calculator extends Application implements EventHandler<ActionEvent> {
 
-    Label label;
+    TextField label;
     Button numberOneButton;
     Button numberTwoButton;
     Button numberThreeButton;
@@ -37,6 +39,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
     Button acButton;
     Button equalsButton;
     Button backSpaceButton;
+    char[] listOfOperators = {'x', '+', '-', '/',};
 
     String input = "";
     String sum = "";
@@ -68,7 +71,8 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         minusButton = new Button("-");
         multiplyButton = new Button("x");
         backSpaceButton = new Button("del");
-        label = new Label();
+        label = new TextField("0");
+        
 
         //This class will handle the button events
         numberOneButton.setOnAction(this);
@@ -88,35 +92,38 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         divideButton.setOnAction(this);
         equalsButton.setOnAction(this);
         backSpaceButton.setOnAction(this);
-        
+
         GridPane layout = new GridPane();
-
-        layout.add(numberSevenButton, 0, 1);
-        layout.add(numberFourButton, 0, 2);
-        layout.add(numberOneButton, 0, 3);
-        layout.add(acButton, 0, 4);
-        layout.add(numberEightButton, 1, 1);
-        layout.add(numberFiveButton, 1, 2);
-        layout.add(numberTwoButton, 1, 3);
-        layout.add(numberZeroButton, 1, 4);
-        layout.add(numberNineButton, 2, 1);
-        layout.add(numberSixButton, 2, 2);
-        layout.add(numberThreeButton, 2, 3);
-        layout.add(equalsButton, 2, 4);
-        layout.add(plusButton, 3, 1);
-        layout.add(minusButton, 3, 2);
-        layout.add(multiplyButton, 3, 3);
-        layout.add(divideButton, 3, 4);
-        layout.add(backSpaceButton, 4, 1);
-
+        
+        layout.add(numberSevenButton, 1, 3);
+        layout.add(numberFourButton, 1, 4);
+        layout.add(numberOneButton, 1, 5);
+        layout.add(acButton, 1, 6);
+        layout.add(numberEightButton, 2, 3);
+        layout.add(numberFiveButton, 2, 4);
+        layout.add(numberTwoButton, 2, 5);
+        layout.add(numberZeroButton, 2, 6);
+        layout.add(numberNineButton, 3, 3);
+        layout.add(numberSixButton, 3, 4);
+        layout.add(numberThreeButton, 3, 5);
+        layout.add(equalsButton, 3, 6);
+        layout.add(plusButton, 4, 3);
+        layout.add(minusButton, 4, 4);
+        layout.add(multiplyButton, 4, 5);
+        layout.add(divideButton, 4, 6);
+        layout.add(backSpaceButton, 5, 3);
         layout.add(label, 0, 0);
+        
         layout.setVgap(10);
         layout.setHgap(10);
+        
+        label.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(layout, 300, 250);
 
         primaryStage.setScene(scene);
         primaryStage.show();
+        
     }
 
     @Override
@@ -152,9 +159,16 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
             input += "0";
             label.setText(input);
         } else if (event.getSource() == equalsButton) {
-            parseInput();
-            calculate();
-            label.setText(sum);
+            if(!checkForMultipeOperators()) {
+                parseInput();
+                calculate();
+                clearNums();
+                label.setText(sum);
+            }
+            else {
+                label.setText("Found more than one operator. Clear and try again.");
+            }
+            
         } else if (event.getSource() == plusButton) {
             input += "+";
             operator = '+';
@@ -173,10 +187,12 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
             label.setText(input);
         } else if (event.getSource() == acButton) {
             clearNums();
-        } else if(event.getSource() == backSpaceButton) {
+            clearScreen();
+            sum = "";
+        } else if (event.getSource() == backSpaceButton) {
             input = input.substring(0, input.length() - 1);
             label.setText(input);
-            
+
         }
     }
 
@@ -196,10 +212,11 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
             } else if (operator == 120) {
                 sum = Integer.toString(num1 * num2);
             }
-        } 
-        catch  (ArithmeticException e) {e.getMessage();}
+        } catch (ArithmeticException e) {
+            e.getMessage();
+        }
     }
-    
+
     public void parseInput() {
         int indexOfOperator = input.indexOf(operator);
         int inputLength = input.length();
@@ -212,43 +229,26 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         num1 = 0;
         num2 = 0;
         input = "";
-        sum = "";
+        //sum = "";
         operator = ' ';
+        //label.setText("");
+    }
+    
+    public void clearScreen() {
         label.setText("");
     }
 
-//    public String getInput(ActionEvent event) {
-//        if (event.getSource() == numberOneButton) {
-//            System.out.println("Hello");
-//            return "1";
-//        } else if (event.getSource() == numberTwoButton) {
-//            return "2";
-//        } else if (event.getSource() == numberThreeButton) {
-//            return "3";
-//        } else if (event.getSource() == numberFourButton) {
-//            return "4";
-//        } else if (event.getSource() == numberFiveButton) {
-//            return "5";
-//        } else if (event.getSource() == numberSixButton) {
-//            return "6";
-//        } else if (event.getSource() == numberSevenButton) {
-//            return "7";
-//        } else if (event.getSource() == numberEightButton) {
-//            return "8";
-//        } else if (event.getSource() == numberNineButton) {
-//            return "9";
-//        } else if (event.getSource() == numberZeroButton) {
-//            return "0";
-//        } else if (event.getSource() == equalsButton) {
-//            lastOperator = '=';
-//            return "=";
-//        }
-//        else if(event.getSource() == plusButton) {
-//            lastOperator = '+';
-//            return "+";
-//        }
-//
-//        return "";
-//
-//    }
+    public boolean checkForMultipeOperators() {
+        String currentOperator;
+
+        for (int i = 0; i < listOfOperators.length; ++i) {
+            currentOperator = String.valueOf(listOfOperators[i]);
+
+            if (input.contains(currentOperator) && input.indexOf(currentOperator) != input.lastIndexOf(currentOperator)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
