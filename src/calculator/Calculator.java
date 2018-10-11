@@ -36,6 +36,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
     Button multiplyButton;
     Button acButton;
     Button equalsButton;
+    Button backSpaceButton;
 
     String input = "";
     String sum = "";
@@ -66,6 +67,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         plusButton = new Button("+");
         minusButton = new Button("-");
         multiplyButton = new Button("x");
+        backSpaceButton = new Button("del");
         label = new Label();
 
         //This class will handle the button events
@@ -85,7 +87,8 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         acButton.setOnAction(this);
         divideButton.setOnAction(this);
         equalsButton.setOnAction(this);
-
+        backSpaceButton.setOnAction(this);
+        
         GridPane layout = new GridPane();
 
         layout.add(numberSevenButton, 0, 1);
@@ -104,6 +107,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         layout.add(minusButton, 3, 2);
         layout.add(multiplyButton, 3, 3);
         layout.add(divideButton, 3, 4);
+        layout.add(backSpaceButton, 4, 1);
 
         layout.add(label, 0, 0);
         layout.setVgap(10);
@@ -151,7 +155,6 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
             parseInput();
             calculate();
             label.setText(sum);
-
         } else if (event.getSource() == plusButton) {
             input += "+";
             operator = '+';
@@ -170,6 +173,10 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
             label.setText(input);
         } else if (event.getSource() == acButton) {
             clearNums();
+        } else if(event.getSource() == backSpaceButton) {
+            input = input.substring(0, input.length() - 1);
+            label.setText(input);
+            
         }
     }
 
