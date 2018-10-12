@@ -1,6 +1,7 @@
 package calculator;
 
 import javafx.application.Application;
+import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -10,10 +11,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 
 /**
  *
@@ -73,6 +76,10 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         backSpaceButton = new Button("del");
         label = new TextField("0");
         
+        numberEightButton.setScaleX(1);
+        numberSevenButton.setScaleX(1);
+        acButton.setScaleX(1);
+        
 
         //This class will handle the button events
         numberOneButton.setOnAction(this);
@@ -91,36 +98,51 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         acButton.setOnAction(this);
         divideButton.setOnAction(this);
         equalsButton.setOnAction(this);
-        backSpaceButton.setOnAction(this);
+        //backSpaceButton.setOnAction(this);
 
-        GridPane layout = new GridPane();
+        GridPane gPane = new GridPane();
+        BorderPane bPane = new BorderPane();
         
-        layout.add(numberSevenButton, 1, 3);
-        layout.add(numberFourButton, 1, 4);
-        layout.add(numberOneButton, 1, 5);
-        layout.add(acButton, 1, 6);
-        layout.add(numberEightButton, 2, 3);
-        layout.add(numberFiveButton, 2, 4);
-        layout.add(numberTwoButton, 2, 5);
-        layout.add(numberZeroButton, 2, 6);
-        layout.add(numberNineButton, 3, 3);
-        layout.add(numberSixButton, 3, 4);
-        layout.add(numberThreeButton, 3, 5);
-        layout.add(equalsButton, 3, 6);
-        layout.add(plusButton, 4, 3);
-        layout.add(minusButton, 4, 4);
-        layout.add(multiplyButton, 4, 5);
-        layout.add(divideButton, 4, 6);
-        layout.add(backSpaceButton, 5, 3);
-        layout.add(label, 0, 0);
-        
-        layout.setVgap(10);
-        layout.setHgap(10);
-        
-        label.setAlignment(Pos.CENTER);
+        gPane.add(numberSevenButton, 1, 3);
+        gPane.add(numberFourButton, 1, 4);
+        gPane.add(numberOneButton, 1, 5);
+        gPane.add(acButton, 1, 6);
+        gPane.add(numberEightButton, 2, 3);
+        gPane.add(numberFiveButton, 2, 4);
+        gPane.add(numberTwoButton, 2, 5);
+        gPane.add(numberZeroButton, 2, 6);
+        gPane.add(numberNineButton, 3, 3);
+        gPane.add(numberSixButton, 3, 4);
+        gPane.add(numberThreeButton, 3, 5);
+        gPane.add(equalsButton, 3, 6);
+        gPane.add(plusButton, 4, 3);
+        gPane.add(minusButton, 4, 4);
+        gPane.add(multiplyButton, 4, 5);
+        gPane.add(divideButton, 4, 6);
 
-        Scene scene = new Scene(layout, 300, 250);
+        
 
+        
+
+        
+       
+        
+        label.setEditable(false);
+        label.setAlignment(Pos.CENTER_LEFT);
+        
+        bPane.setTop(label);
+        gPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        bPane.setCenter(gPane);
+        
+        
+        gPane.setVgap(5);
+        //gPane.setHgap(30);
+        
+        
+        
+
+        Scene scene = new Scene(bPane, 300, 300);
+        
         primaryStage.setScene(scene);
         primaryStage.show();
         
@@ -162,7 +184,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
             if(!checkForMultipeOperators()) {
                 parseInput();
                 calculate();
-                clearNums();
+                
                 label.setText(sum);
             }
             else {
