@@ -45,7 +45,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
     char[] listOfOperators = {'x', '+', '-', '/',};
 
     String input = "";
-    int sum = 0;
+    String sum = "";
     int num1 = 0;
     int num2 = 0;
     char operator = ' ';
@@ -174,15 +174,17 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
                 if (numOperators == 1) {
                     parseInput();
                     calculate();
-                    label.setText(Integer.toString(sum));
+                    label.setText(sum);
                     clearNums();
-                    sum = 0;
+                    sum = "";
                 } else if (numOperators == 0) {
                     throw new ArithmeticException("No operator detected");
                 }
                 else {
                     throw new ArithmeticException("Unknown error");
                 }
+                
+
             } else if (event.getSource() == plusButton) {
                 input += "+";
                 ++numOperators;
@@ -206,7 +208,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
             } else if (event.getSource() == acButton) {
                 clearNums();
                 clearScreen();
-                sum = 0;
+                sum = "";
             } //else if (event.getSource() == backSpaceButton) {
             //input = input.substring(0, input.length() - 1);
             //label.setText(input);
@@ -215,7 +217,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         } catch (ArithmeticException e) {
             clearNums();
             clearScreen();
-            sum = 0;
+            sum = "";
             label.setText(e.getMessage());
         }
     }
@@ -223,16 +225,16 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
     public void calculate() throws ArithmeticException {
         if (operator == 47) {//if operator is a forward slash
             if (num2 != 0) {
-                sum = num1 / num2;
+                sum = Integer.toString(num1 / num2);
             } else {
                 throw new ArithmeticException("Arithmetic error");
             }
         } else if (operator == 61) { // -
-            sum = num1 - num2;
+            sum = Integer.toString(num1 - num2);
         } else if (operator == 43) { //+
-            sum = num1 + num2;
+            sum = Integer.toString(num1 + num2);
         } else if (operator == 120) {
-            sum = num1 * num2;
+            sum = Integer.toString(num1 * num2);
         }
 
     }
