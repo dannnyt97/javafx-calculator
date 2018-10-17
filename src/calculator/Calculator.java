@@ -45,10 +45,11 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
     char[] listOfOperators = {'x', '+', '-', '/',};
 
     String input = "";
-    String sum = "";
+    int sum = 0;
     int num1 = 0;
     int num2 = 0;
     char operator = ' ';
+    int numOperators = 0;
 
     public static void main(String[] args) {
         launch(args);
@@ -75,11 +76,10 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         multiplyButton = new Button("x");
         backSpaceButton = new Button("del");
         label = new TextField("0");
-        
+
         numberEightButton.setScaleX(1);
         numberSevenButton.setScaleX(1);
         acButton.setScaleX(1);
-        
 
         //This class will handle the button events
         numberOneButton.setOnAction(this);
@@ -102,7 +102,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
 
         GridPane gPane = new GridPane();
         BorderPane bPane = new BorderPane();
-        
+
         gPane.add(numberSevenButton, 1, 3);
         gPane.add(numberFourButton, 1, 4);
         gPane.add(numberOneButton, 1, 5);
@@ -120,123 +120,121 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         gPane.add(multiplyButton, 4, 5);
         gPane.add(divideButton, 4, 6);
 
-        
-
-        
-
-        
-       
-        
         label.setEditable(false);
         label.setAlignment(Pos.CENTER_LEFT);
-        
+
         bPane.setTop(label);
         gPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         bPane.setCenter(gPane);
-        
-        
+
         gPane.setVgap(5);
         //gPane.setHgap(30);
-        
-        
-        
 
         Scene scene = new Scene(bPane, 300, 300);
-        
+
         primaryStage.setScene(scene);
         primaryStage.show();
-        
+
     }
 
     @Override
-    public void handle(ActionEvent event) {
-        if (event.getSource() == numberOneButton) {
-            input += "1";
-            label.setText(input);
-        } else if (event.getSource() == numberTwoButton) {
-            input += "2";
-            label.setText(input);
-        } else if (event.getSource() == numberThreeButton) {
-            input += "3";
-            label.setText(input);
-        } else if (event.getSource() == numberFourButton) {
-            input += "4";
-            label.setText(input);
-        } else if (event.getSource() == numberFiveButton) {
-            input += "5";
-            label.setText(input);
-        } else if (event.getSource() == numberSixButton) {
-            input += "6";
-            label.setText(input);
-        } else if (event.getSource() == numberSevenButton) {
-            input += "7";
-            label.setText(input);
-        } else if (event.getSource() == numberEightButton) {
-            input += "8";
-            label.setText(input);
-        } else if (event.getSource() == numberNineButton) {
-            input += "9";
-            label.setText(input);
-        } else if (event.getSource() == numberZeroButton) {
-            input += "0";
-            label.setText(input);
-        } else if (event.getSource() == equalsButton) {
-            if(!checkForMultipeOperators()) {
-                parseInput();
-                calculate();
-                
-                label.setText(sum);
-            }
-            else {
-                label.setText("Found more than one operator. Clear and try again.");
-            }
-            
-        } else if (event.getSource() == plusButton) {
-            input += "+";
-            operator = '+';
-            label.setText(input);
-        } else if (event.getSource() == minusButton) {
-            input += "-";
-            operator = '-';
-            label.setText(input);
-        } else if (event.getSource() == multiplyButton) {
-            input += "x";
-            operator = 'x';
-            label.setText(input);
-        } else if (event.getSource() == divideButton) {
-            input += "/";
-            operator = '/';
-            label.setText(input);
-        } else if (event.getSource() == acButton) {
+    public void handle(ActionEvent event) throws ArithmeticException {
+        try {
+            if (event.getSource() == numberOneButton) {
+                input += "1";
+                label.setText(input);
+            } else if (event.getSource() == numberTwoButton) {
+                input += "2";
+                label.setText(input);
+            } else if (event.getSource() == numberThreeButton) {
+                input += "3";
+                label.setText(input);
+            } else if (event.getSource() == numberFourButton) {
+                input += "4";
+                label.setText(input);
+            } else if (event.getSource() == numberFiveButton) {
+                input += "5";
+                label.setText(input);
+            } else if (event.getSource() == numberSixButton) {
+                input += "6";
+                label.setText(input);
+            } else if (event.getSource() == numberSevenButton) {
+                input += "7";
+                label.setText(input);
+            } else if (event.getSource() == numberEightButton) {
+                input += "8";
+                label.setText(input);
+            } else if (event.getSource() == numberNineButton) {
+                input += "9";
+                label.setText(input);
+            } else if (event.getSource() == numberZeroButton) {
+                input += "0";
+                label.setText(input);
+            } else if (event.getSource() == equalsButton) {
+                if (numOperators == 1) {
+                    parseInput();
+                    calculate();
+                    label.setText(Integer.toString(sum));
+                    clearNums();
+                    sum = 0;
+                } else if (numOperators == 0) {
+                    throw new ArithmeticException("No operator detected");
+                }
+                else {
+                    throw new ArithmeticException("Unknown error");
+                }
+            } else if (event.getSource() == plusButton) {
+                input += "+";
+                ++numOperators;
+                operator = '+';
+                label.setText(input);
+            } else if (event.getSource() == minusButton) {
+                input += "-";
+                ++numOperators;
+                operator = '-';
+                label.setText(input);
+            } else if (event.getSource() == multiplyButton) {
+                input += "x";
+                ++numOperators;
+                operator = 'x';
+                label.setText(input);
+            } else if (event.getSource() == divideButton) {
+                input += "/";
+                ++numOperators;
+                operator = '/';
+                label.setText(input);
+            } else if (event.getSource() == acButton) {
+                clearNums();
+                clearScreen();
+                sum = 0;
+            } //else if (event.getSource() == backSpaceButton) {
+            //input = input.substring(0, input.length() - 1);
+            //label.setText(input);
+
+            //}
+        } catch (ArithmeticException e) {
             clearNums();
             clearScreen();
-            sum = "";
-        } else if (event.getSource() == backSpaceButton) {
-            input = input.substring(0, input.length() - 1);
-            label.setText(input);
-
+            sum = 0;
+            label.setText(e.getMessage());
         }
     }
 
-//    public void addNumButtonsPushedToInput(Button nums) {
-//        nums.
-//    } {
-//    
-//    }
     public void calculate() throws ArithmeticException {
-        try {
-            if (operator == 47) {//if operator is a forward slash
-                sum = Integer.toString(num1 / num2);
-            } else if (operator == 61) { // -
-                sum = Integer.toString(num1 - num2);
-            } else if (operator == 43) { //+
-                sum = Integer.toString(num1 + num2);
-            } else if (operator == 120) {
-                sum = Integer.toString(num1 * num2);
+        if (operator == 47) {//if operator is a forward slash
+            if (num2 != 0) {
+                sum = num1 / num2;
+            } else {
+                throw new ArithmeticException("Arithmetic error");
             }
-        } catch (ArithmeticException e) {
-            e.getMessage();
+        } else if (operator == 61) { // -
+            sum = num1 - num2;
+        } else if (operator == 43) { //+
+            sum = num1 + num2;
+        } else if (operator == 120) {
+            sum = num1 * num2;
         }
+
     }
 
     public void parseInput() {
@@ -253,24 +251,12 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         input = "";
         //sum = "";
         operator = ' ';
+        numOperators = 0;
         //label.setText("");
     }
-    
+
     public void clearScreen() {
         label.setText("");
-    }
-
-    public boolean checkForMultipeOperators() {
-        String currentOperator;
-
-        for (int i = 0; i < listOfOperators.length; ++i) {
-            currentOperator = String.valueOf(listOfOperators[i]);
-
-            if (input.contains(currentOperator) && input.indexOf(currentOperator) != input.lastIndexOf(currentOperator)) {
-                return true;
-            }
-        }
-        return false;
     }
 
 }
