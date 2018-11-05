@@ -200,10 +200,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         //gPane.setVgap(5);
         //gPane.setHgap(30);
 
-        Scene scene = new Scene(bPane, 300, 300);
-
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        
 
     }
 
