@@ -127,7 +127,77 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         gPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         bPane.setCenter(gPane);
 
-        gPane.setVgap(5);
+        gPane.setVgrow(numberSevenButton, Priority.ALWAYS);
+        gPane.setVgrow(numberFourButton, Priority.ALWAYS);
+        gPane.setVgrow(numberOneButton, Priority.ALWAYS);
+        gPane.setVgrow(acButton, Priority.ALWAYS);
+        gPane.setVgrow(numberEightButton, Priority.ALWAYS);
+        gPane.setVgrow(numberFiveButton, Priority.ALWAYS);
+        gPane.setVgrow(numberTwoButton, Priority.ALWAYS);
+        gPane.setVgrow(numberZeroButton, Priority.ALWAYS);
+        gPane.setVgrow(numberNineButton, Priority.ALWAYS);
+        gPane.setVgrow(numberSixButton, Priority.ALWAYS);
+        gPane.setVgrow(numberThreeButton, Priority.ALWAYS);
+        gPane.setVgrow(equalsButton, Priority.ALWAYS);
+        gPane.setVgrow(plusButton, Priority.ALWAYS);
+        gPane.setVgrow(minusButton, Priority.ALWAYS);
+        gPane.setVgrow(multiplyButton, Priority.ALWAYS);
+        gPane.setVgrow(divideButton, Priority.ALWAYS);
+
+        gPane.setHgrow(numberSevenButton, Priority.ALWAYS);
+        gPane.setHgrow(numberFourButton, Priority.ALWAYS);
+        gPane.setHgrow(numberOneButton, Priority.ALWAYS);
+        gPane.setHgrow(acButton, Priority.ALWAYS);
+        gPane.setHgrow(numberEightButton, Priority.ALWAYS);
+        gPane.setHgrow(numberFiveButton, Priority.ALWAYS);
+        gPane.setHgrow(numberTwoButton, Priority.ALWAYS);
+        gPane.setHgrow(numberZeroButton, Priority.ALWAYS);
+        gPane.setHgrow(numberNineButton, Priority.ALWAYS);
+        gPane.setHgrow(numberSixButton, Priority.ALWAYS);
+        gPane.setHgrow(numberThreeButton, Priority.ALWAYS);
+        gPane.setHgrow(equalsButton, Priority.ALWAYS);
+        gPane.setHgrow(plusButton, Priority.ALWAYS);
+        gPane.setHgrow(minusButton, Priority.ALWAYS);
+        gPane.setHgrow(multiplyButton, Priority.ALWAYS);
+        gPane.setHgrow(divideButton, Priority.ALWAYS);
+
+        numberOneButton.setMaxWidth(Double.MAX_VALUE);
+         numberTwoButton.setMaxWidth(Double.MAX_VALUE);
+         numberThreeButton.setMaxWidth(Double.MAX_VALUE);
+         numberFourButton.setMaxWidth(Double.MAX_VALUE);
+         numberFiveButton.setMaxWidth(Double.MAX_VALUE);
+         numberSixButton.setMaxWidth(Double.MAX_VALUE);
+         numberSevenButton.setMaxWidth(Double.MAX_VALUE);
+         numberEightButton.setMaxWidth(Double.MAX_VALUE);
+         numberNineButton.setMaxWidth(Double.MAX_VALUE);
+         numberZeroButton.setMaxWidth(Double.MAX_VALUE);
+         plusButton.setMaxWidth(Double.MAX_VALUE);
+         minusButton.setMaxWidth(Double.MAX_VALUE);
+         divideButton.setMaxWidth(Double.MAX_VALUE);
+         multiplyButton.setMaxWidth(Double.MAX_VALUE);
+         acButton.setMaxWidth(Double.MAX_VALUE);
+         equalsButton.setMaxWidth(Double.MAX_VALUE);
+         backSpaceButton.setMaxWidth(Double.MAX_VALUE);
+         
+         numberOneButton.setMaxHeight(Double.MAX_VALUE);
+         numberTwoButton.setMaxHeight(Double.MAX_VALUE);
+         numberThreeButton.setMaxHeight(Double.MAX_VALUE);
+         numberFourButton.setMaxHeight(Double.MAX_VALUE);
+         numberFiveButton.setMaxHeight(Double.MAX_VALUE);
+         numberSixButton.setMaxHeight(Double.MAX_VALUE);
+         numberSevenButton.setMaxHeight(Double.MAX_VALUE);
+         numberEightButton.setMaxHeight(Double.MAX_VALUE);
+         numberNineButton.setMaxHeight(Double.MAX_VALUE);
+         numberZeroButton.setMaxHeight(Double.MAX_VALUE);
+         plusButton.setMaxHeight(Double.MAX_VALUE);
+         minusButton.setMaxHeight(Double.MAX_VALUE);
+         divideButton.setMaxHeight(Double.MAX_VALUE);
+         multiplyButton.setMaxHeight(Double.MAX_VALUE);
+         acButton.setMaxHeight(Double.MAX_VALUE);
+         equalsButton.setMaxHeight(Double.MAX_VALUE);
+         backSpaceButton.setMaxHeight(Double.MAX_VALUE);
+
+        //gPane.setVgap(5);
         //gPane.setHgap(30);
 
         Scene scene = new Scene(bPane, 300, 300);
@@ -179,11 +249,9 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
                     sum = "";
                 } else if (numOperators == 0) {
                     throw new ArithmeticException("No operator detected");
-                }
-                else {
+                } else {
                     throw new ArithmeticException("Unknown error");
                 }
-                
 
             } else if (event.getSource() == plusButton) {
                 input += "+";
