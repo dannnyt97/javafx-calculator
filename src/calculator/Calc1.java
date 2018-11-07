@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
 
 /**
@@ -44,18 +45,31 @@ public class Calc1 extends Application implements EventHandler<ActionEvent> {
         GridPane gPane = new GridPane();
         BorderPane bPane = new BorderPane();
         
+        
+        
         label = new TextField();
         primaryStage.setTitle("Calculator");
 
         for (int i = 0; i < numpadButtons.length; i++) {
             numpadButtons[i] = new Button(numButtonNames[i]); //create new button objects and give them their text
             numpadButtons[i].setOnAction(this);
+            gPane.setVgrow(numpadButtons[i], Priority.ALWAYS);
+            gPane.setHgrow(numpadButtons[i], Priority.ALWAYS);
+            numpadButtons[i].setMaxWidth(Double.MAX_VALUE);
+            numpadButtons[i].setMaxHeight(Double.MAX_VALUE);
+            
+            
         }
 
         for (int i = 0; i < operatorButtons.length; i++) {
             operatorButtons[i] = new Button(operatorButtonNames[i]);
             operatorButtons[i].setOnAction(this);
+            gPane.setVgrow(operatorButtons[i], Priority.ALWAYS);
+            gPane.setHgrow(operatorButtons[i], Priority.ALWAYS);
+            operatorButtons[i].setMaxWidth(Double.MAX_VALUE);
+            operatorButtons[i].setMaxHeight(Double.MAX_VALUE);
         }
+        
 
         gPane.add(numpadButtons[6], 1, 3);
         gPane.add(numpadButtons[3], 1, 4);
@@ -73,6 +87,11 @@ public class Calc1 extends Application implements EventHandler<ActionEvent> {
         gPane.add(operatorButtons[1], 4, 4);
         gPane.add(operatorButtons[2], 4, 5);
         gPane.add(operatorButtons[3], 4, 6);
+        gPane.setVgap(4);
+        gPane.setHgap(4);
+        
+        
+        
         
         label.setEditable(false);
         label.setAlignment(Pos.CENTER_LEFT);
