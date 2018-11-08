@@ -5,22 +5,17 @@
  */
 package calculator;
 
-import java.awt.Color;
 import javafx.geometry.Insets;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
-
 
 /**
  *
@@ -34,12 +29,11 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
     String[] operatorButtonNames = {"+", "-", "x", "/", "=", "C"};
     TextField label;
     String input = "";
-    String sum = "";
-    Double num1 = 0.0;
-    Double num2 = 0.0;
+    double sum = 0;
+    double num1 = 0;
+    double num2 = 0;
     char operator = ' ';
     int numOperators = 0;
-    
 
     public static void main(String[] args) {
         launch(args);
@@ -48,8 +42,8 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
     @Override
     public void start(Stage primaryStage) throws Exception {
         GridPane gPane = new GridPane();
-        BorderPane bPane = new BorderPane();        
-        
+        BorderPane bPane = new BorderPane();
+
         label = new TextField();
         primaryStage.setTitle("Calculator");
 
@@ -59,7 +53,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
             gPane.setVgrow(numpadButtons[i], Priority.ALWAYS);
             gPane.setHgrow(numpadButtons[i], Priority.ALWAYS);
             numpadButtons[i].setMaxWidth(Double.MAX_VALUE);
-            numpadButtons[i].setMaxHeight(Double.MAX_VALUE);            
+            numpadButtons[i].setMaxHeight(Double.MAX_VALUE);
         }
 
         for (int i = 0; i < operatorButtons.length; i++) {
@@ -70,7 +64,6 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
             operatorButtons[i].setMaxWidth(Double.MAX_VALUE);
             operatorButtons[i].setMaxHeight(Double.MAX_VALUE);
         }
-        
 
         gPane.add(numpadButtons[6], 1, 3);
         gPane.add(numpadButtons[3], 1, 4);
@@ -90,17 +83,13 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         gPane.add(operatorButtons[3], 4, 6);
         gPane.setVgap(2);
         gPane.setHgap(2);
-        
-        
-        
-        
-        
+
         label.setEditable(false);
         //label.setAlignment(Pos.CENTER_LEFT);
 
         bPane.setTop(label);
-        bPane.setPadding(new Insets(10,10,10,10));
-        
+        bPane.setPadding(new Insets(10, 10, 10, 10));
+
         gPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         bPane.setCenter(gPane);
 
@@ -148,9 +137,9 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
                 if (numOperators == 1) {
                     parseInput();
                     calculate();
-                    label.setText(sum);
+                    label.setText(Double.toString(sum));
                     clearNums();
-                    sum = "";
+                    sum = 0;
                 } else if (numOperators == 0) {
                     throw new ArithmeticException("No operator detected");
                 } else {
@@ -180,7 +169,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
             } else if (event.getSource() == operatorButtons[5]) {
                 clearNums();
                 clearScreen();
-                sum = "";
+                sum = 0;
             } //else if (event.getSource() == backSpaceButton) {
             //input = input.substring(0, input.length() - 1);
             //label.setText(input);
@@ -189,7 +178,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         } catch (ArithmeticException e) {
             clearNums();
             clearScreen();
-            sum = "";
+            sum = 0;
             label.setText(e.getMessage());
         }
     }
@@ -197,16 +186,16 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
     public void calculate() throws ArithmeticException {
         if (operator == 47) {//if operator is a forward slash
             if (num2 != 0) {
-                sum = Double.toString(num1 / num2);
+                sum = (num1 / num2);
             } else {
                 throw new ArithmeticException("Arithmetic error");
             }
-        } else if (operator == 61) { // -
-            sum = Double.toString(num1 - num2);
+        } else if (operator == 45) { // -
+            sum = (num1 - num2);
         } else if (operator == 43) { //+
-            sum = Double.toString(num1 + num2);
+            sum = (num1 + num2);
         } else if (operator == 120) {
-            sum = Double.toString(num1 * num2);
+            sum = (num1 * num2);
         }
 
     }
@@ -220,8 +209,8 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
     }
 
     public void clearNums() {
-        num1 = 0.0;
-        num2 = 0.0;
+        num1 = 0;
+        num2 = 0;
         input = "";
         //sum = "";
         operator = ' ';
