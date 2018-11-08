@@ -5,17 +5,22 @@
  */
 package calculator;
 
+import java.awt.Color;
+import javafx.geometry.Insets;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.stage.Stage;
+
 
 /**
  *
@@ -34,6 +39,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
     Double num2 = 0.0;
     char operator = ' ';
     int numOperators = 0;
+    
 
     public static void main(String[] args) {
         launch(args);
@@ -42,9 +48,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
     @Override
     public void start(Stage primaryStage) throws Exception {
         GridPane gPane = new GridPane();
-        BorderPane bPane = new BorderPane();
-        
-        
+        BorderPane bPane = new BorderPane();        
         
         label = new TextField();
         primaryStage.setTitle("Calculator");
@@ -55,9 +59,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
             gPane.setVgrow(numpadButtons[i], Priority.ALWAYS);
             gPane.setHgrow(numpadButtons[i], Priority.ALWAYS);
             numpadButtons[i].setMaxWidth(Double.MAX_VALUE);
-            numpadButtons[i].setMaxHeight(Double.MAX_VALUE);
-            
-            
+            numpadButtons[i].setMaxHeight(Double.MAX_VALUE);            
         }
 
         for (int i = 0; i < operatorButtons.length; i++) {
@@ -86,8 +88,8 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         gPane.add(operatorButtons[1], 4, 4);
         gPane.add(operatorButtons[2], 4, 5);
         gPane.add(operatorButtons[3], 4, 6);
-        gPane.setVgap(4);
-        gPane.setHgap(4);
+        gPane.setVgap(2);
+        gPane.setHgap(2);
         
         
         
@@ -97,6 +99,8 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         //label.setAlignment(Pos.CENTER_LEFT);
 
         bPane.setTop(label);
+        bPane.setPadding(new Insets(10,10,10,10));
+        
         gPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         bPane.setCenter(gPane);
 
