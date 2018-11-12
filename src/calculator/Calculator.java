@@ -51,6 +51,8 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
             numpadButtons[i] = new Button(numButtonNames[i]); //create new button objects and give them their text
             numpadButtons[i].setOnAction(this);
             gPane.setVgrow(numpadButtons[i], Priority.ALWAYS);
+            //Why does this work?
+            //GridPane.setVgrow(numpadButtons[i], Priority.ALWAYS); 
             gPane.setHgrow(numpadButtons[i], Priority.ALWAYS);
             numpadButtons[i].setMaxWidth(Double.MAX_VALUE);
             numpadButtons[i].setMaxHeight(Double.MAX_VALUE);
@@ -184,18 +186,27 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
     }
 
     public void calculate() throws ArithmeticException {
-        if (operator == 47) {//if operator is a forward slash
-            if (num2 != 0) {
-                sum = (num1 / num2);
-            } else {
-                throw new ArithmeticException("Arithmetic error");
-            }
-        } else if (operator == 45) { // -
-            sum = (num1 - num2);
-        } else if (operator == 43) { //+
-            sum = (num1 + num2);
-        } else if (operator == 120) {
-            sum = (num1 * num2);
+        switch (operator) {
+            case 47:
+                //if operator is a forward slash
+                if (num2 != 0) {
+                    sum = (num1 / num2);
+                } else {
+                    throw new ArithmeticException("Arithmetic error");
+                }   break;
+            case 45:
+                // -
+                sum = (num1 - num2);
+                break;
+            case 43:
+                //+
+                sum = (num1 + num2);
+                break;
+            case 120:
+                sum = (num1 * num2);
+                break;
+            default:
+                break;
         }
 
     }
@@ -205,7 +216,6 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         int inputLength = input.length();
         num1 = Double.parseDouble(input.substring(0, indexOfOperator));
         num2 = Double.parseDouble(input.substring(indexOfOperator + 1, inputLength));
-
     }
 
     public void clearNums() {
@@ -220,6 +230,17 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
 
     public void clearScreen() {
         label.setText("");
+    }
+    
+    public boolean isDouble() { //could also use %1 instead i think
+        String sumToString = Double.toString(sum);
+        
+        if(sumToString.contains(".")) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 }
