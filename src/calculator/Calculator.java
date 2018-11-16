@@ -23,17 +23,17 @@ import javafx.stage.Stage;
  */
 public class Calculator extends Application implements EventHandler<ActionEvent> {
 
-    Button[] numpadButtons = new Button[10];
-    Button[] operatorButtons = new Button[6];
-    String[] numButtonNames = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
-    String[] operatorButtonNames = {"+", "-", "x", "/", "=", "C"};
-    TextField label;
-    String input = "";
-    double sum = 0;
-    double num1 = 0;
-    double num2 = 0;
-    char operator = ' ';
-    int numOperators = 0;
+    private final Button[] numpadButtons = new Button[10];
+    private final Button[] operatorButtons = new Button[6];
+    private final String[] numButtonNames = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+    private final String[] operatorButtonNames = {"+", "-", "x", "/", "=", "C"};
+    private TextField label;
+    private String input = "";
+    private double sum = 0;
+    private double num1 = 0;
+    private double num2 = 0;
+    private char operator = ' ';
+    private int numOperators = 0;
 
     public static void main(String[] args) {
         launch(args);
@@ -136,16 +136,18 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
                 input += "0";
                 label.setText(input);
             } else if (event.getSource() == operatorButtons[4]) {
-                if (numOperators == 1) {
-                    parseInput();
-                    calculate();
-                    label.setText(Double.toString(sum));
-                    clearNums();
-                    sum = 0;
-                } else if (numOperators == 0) {
-                    throw new ArithmeticException("No operator detected");
-                } else {
-                    throw new ArithmeticException("Unknown error");
+                switch (numOperators) {
+                    case 1:
+                        parseInput();
+                        calculate();
+                        label.setText(Double.toString(sum));
+                        clearNums();
+                        sum = 0;
+                        break;
+                    case 0:
+                        throw new ArithmeticException("No operator detected");
+                    default:
+                        throw new ArithmeticException("Unknown error");
                 }
 
             } else if (event.getSource() == operatorButtons[0]) {
@@ -187,8 +189,7 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
 
     public void calculate() throws ArithmeticException {
         switch (operator) {
-            case 47:
-                //if operator is a forward slash
+            case 47: //if operator is a /
                 if (num2 != 0) {
                     sum = (num1 / num2);
                 } else {
@@ -196,14 +197,14 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
                 }   break;
             case 45:
                 // -
-                sum = (num1 - num2);
+                sum = (num1 - num2); //if operator is a -
                 break;
             case 43:
                 //+
-                sum = (num1 + num2);
+                sum = (num1 + num2); //if operator is a +
                 break;
             case 120:
-                sum = (num1 * num2);
+                sum = (num1 * num2); //if operator is a x
                 break;
             default:
                 break;
@@ -232,15 +233,15 @@ public class Calculator extends Application implements EventHandler<ActionEvent>
         label.setText("");
     }
     
-    public boolean isDouble() { //could also use %1 instead i think
-        String sumToString = Double.toString(sum);
-        
-        if(sumToString.contains(".")) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
+//    public boolean isDouble() { //could also use %1 instead i think
+//        String sumToString = Double.toString(sum);
+//        
+//        if(sumToString.contains(".")) {
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
 
 }
